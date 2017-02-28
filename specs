@@ -1,0 +1,41 @@
+mission: create a university registrar that lets a person input students and track their enrollment date. Also input courses and course Ids. Then assign students to courses.
+
+create databases
+  registrar
+  registrar_test
+
+create tables
+  students
+    name
+    date_enrolled
+    id
+  courses
+    name
+    course_number
+    id
+  classes
+    course_id
+    student_id
+    id
+
+/
+
+write tests for student class
+
+write functions for student class
+
+write tests for course class
+
+write functions for course class
+
+write tests for classes class
+
+write functions for classes class
+
+write joint table/joint statement functions for student class
+
+write joint table/joint statement functions for course class
+
+/
+
+write silex app.php page
