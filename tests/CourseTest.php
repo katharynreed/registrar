@@ -127,6 +127,31 @@ class CourseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($result, $expected_result);
     }
 
+    function test_getStudents()
+    {
+        // Arrange
+        $name = 'Intro to Business Administration';
+        $course_number = "BA101";
+        $test_course = new Course ($name, $course_number);
+        $test_course->save();
+
+        $returned_course = Course::getAll();
+
+        $name = 'Dave';
+        $date_enrolled = "December 1, 2000";
+        $test_student = new Student ($name, $date_enrolled);
+        $test_student->save();
+        $returned_students = Student::getAll();
+        $student_id = $returned_students[0]->getId();
+
+        // Act
+        $returned_course[0]->addStudent($student_id);
+        $result = $returned_course[0]->getStudent();
+        $expected_result = array($test_student);
+        // Assert
+        $this->assertEquals($result, $expected_result);
+    }
+
 
 
 

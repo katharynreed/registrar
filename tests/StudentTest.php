@@ -140,9 +140,11 @@ class StudentTest extends PHPUnit_Framework_TestCase
            $date_enrolled = "December 1, 2000";
            $test_student = new Student ($name, $date_enrolled);
            $test_student->save();
+           $returned_students = Student::getAll();
+
            // Act
-           $test_student->addCourse($course_id);
-           $result = $test_student->getCourses();
+           $returned_students[0]->addCourse($course_id);
+           $result = $returned_students[0]->getCourses();
            $expected_result = array($test_course);
            // Assert
            $this->assertEquals($result, $expected_result);

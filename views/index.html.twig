@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <title>Registrar</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Registerar</h1>
+            {%block content%}
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            a course
+                        </p>
+                        {%if courses is not empty%}
+                            {%for course in courses%}
+                                <a href="/course/{{course.getId}}">{{course.getCourseNumber}}</a>
+                            {%endfor%}
+                        {%endif%}
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            a student
+                        </p>
+                        {%if students is not empty%}
+                            {%for student in students%}
+                                <a href="/student/{{student.getId}}">{{student.getStudentName}}</a>
+                            {%endfor%}
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Add a new course</h3>
+                        <form action="/add/course" method="post">
+                            <input required type="text" name="new_name" placeholder="course name">
+                            <input required type="text" name="new_course_number" placeholder="course number">
+                            <button type="submit" name="button">Create</button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Enroll a new student</h3>
+                        <form action="/add/student" method="post">
+                            <input required type="text" name="new_student_name" placeholder="name">
+                            <input required type="date" name="enrollment_date" placeholder="today's date">
+                            <button type="submit" name="button">Enroll</button>
+                        </form>
+                    </div>
+                </div>
+            {%endblock%}
+        </div>
+    </body>
+</html>

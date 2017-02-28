@@ -1,4 +1,7 @@
 <?php
+
+    require_once __DIR__.'/../src/Student.php';
+
     class Course
     {
         private $name;
@@ -45,6 +48,11 @@
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM courses WHERE id = {$this->getId()};");
+        }
+
         static function getAll()
         {
             $returned_names = $GLOBALS['DB']->query("SELECT * FROM courses;");
@@ -79,6 +87,24 @@
             $GLOBALS['DB']->exec("DELETE FROM courses WHERE id = {$this->getId()}");
         }
 
+        function addStudent($student_id)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO enrollments (course_id, student_id) VALUES ( {$this->getId()}, $student_id);");
+        }
 
+        function getStudent()
+        {
+            $returned_students = $GLOBALS['DB']->query("SELECT students.* FROM courses JOIN enrollments ON (enrollments.course_id = courses.id) JOIN students ON (students.id = enrollments.student_id) WHERE courses.id = {$this->getId()};");
+            $students = [];
+            foreach($returned_students as $student)
+            {
+                $name = $student['name'];
+                $date_enrolled = $student['date_enrolled'];
+                $id = $student['id'];
+                $new_student = new Student($name, $date_enrolled, $id);
+                array_push($students, $new_student);
+            }
+            return $students;
+        }
     }
 ?>

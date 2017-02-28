@@ -1,6 +1,6 @@
 <?php
 
-    require_once 'src/Course.php';
+require_once __DIR__.'/../src/Course.php';
 
     class Student
     {
@@ -14,7 +14,6 @@
             $this->date_enrolled = $date_enrolled;
             $this->id = $id;
         }
-
 
         function setStudentName($new_student_name)
         {
@@ -37,6 +36,11 @@
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM students;");
+        }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM students WHERE id = {$this->getId()};");
         }
 
         function save()
@@ -87,7 +91,7 @@
 
         function getCourses()
         {
-            $returned_courses = $GLOBALS['DB']->query("SELECT courses.* FROM students JOIN enrollments ON (students.id = enrollments.students_id) JOIN courses ON (enrollments.course_id = courses.id) WHERE students.id = {$this->getId()};");
+            $returned_courses = $GLOBALS['DB']->query("SELECT courses.* FROM students JOIN enrollments ON (enrollments.student_id = students.id) JOIN courses ON (courses.id = enrollments.course_id) WHERE students.id = {$this->getId()};");
             $courses = [];
             foreach($returned_courses as $course)
             {

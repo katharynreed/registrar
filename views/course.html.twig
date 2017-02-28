@@ -1,0 +1,12 @@
+{% extends "index.html.twig"%}
+
+{%block content%}
+
+            <li>{{course.getCourseNumber}}</li>
+            <li>{{course.getCourseName}}</li>
+            <form class="" action="/student/{{ student.getId() }}" method="post">
+                <input name="_method" type="hidden" value="delete">
+                <button type="submit" name="delete">Delete Student</button>
+            </form>
+
+{%endblock%}
