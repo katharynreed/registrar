@@ -7,12 +7,11 @@
     <body>
         <div class="container">
             <h1>Registerar</h1>
+            {%block header%}
+            {%endblock%}
             {%block content%}
                 <div class="row">
                     <div class="col-md-6">
-                        <p>
-                            a course
-                        </p>
                         {%if courses is not empty%}
                             {%for course in courses%}
                                 <a href="/course/{{course.getId}}">{{course.getCourseNumber}}</a>
@@ -20,9 +19,6 @@
                         {%endif%}
                     </div>
                     <div class="col-md-6">
-                        <p>
-                            a student
-                        </p>
                         {%if students is not empty%}
                             {%for student in students%}
                                 <a href="/student/{{student.getId}}">{{student.getStudentName}}</a>

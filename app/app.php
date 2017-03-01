@@ -41,12 +41,14 @@
 
     $app->get("/course/{id}", function($id) use ($app) {
         $found_course = Course::findCourse($id);
-        return $app['twig']->render('course.html.twig', array('course' => $found_course, 'students' => Student::getAll(), 'courses' => Course::getAll()));
+        $returned_students = $found_course->getStudent();
+        return $app['twig']->render('course.html.twig', array('course' => $found_course, 'returned_students' => $returned_students, 'students' => Student::getAll(), 'courses' => Course::getAll()));
     });
 
     $app->get("/student/{id}", function($id) use ($app) {
         $found_student = Student::findStudent($id);
-        return $app['twig']->render('student.html.twig', array('student' => $found_student, 'students' => Student::getAll(), 'courses' => Course::getAll()));
+        $returned_courses = $found_student->getCourses();
+        return $app['twig']->render('student.html.twig', array('student' => $found_student, 'returned_courses' => $returned_courses, 'students' => Student::getAll(), 'courses' => Course::getAll()));
     });
 
     $app->delete('/course/{id}', function ($id) use ($app) {
@@ -61,6 +63,19 @@
         return $app->redirect('/');
     });
 
+    $app->post('/add_student_to_course/{id}', function ($id) use ($app) {
+        $student_id = $_POST['students'];
+        $course = Course::findCourse($id);
+        $course->addStudent($student_id);
+        return $app->redirect('/course/'.$id);
+    });
+
+    $app->post('/add_to_course/{id}', function ($id) use ($app) {
+        $course_id = $_POST['courses'];
+        $student = Student::findStudent($id);
+        $student->addCourse($course_id);
+        return $app->redirect('/student/'.$id);
+    });
 
     return $app;
 ?>

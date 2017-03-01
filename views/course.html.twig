@@ -1,12 +1,31 @@
 {% extends "index.html.twig"%}
 
+{%block header%}
+<a href="/">Home</a>
+{%endblock%}
+
 {%block content%}
 
             <li>{{course.getCourseNumber}}</li>
             <li>{{course.getCourseName}}</li>
-            <form class="" action="/student/{{ student.getId() }}" method="post">
+            <form action="/course/{{ course.getId() }}" method="post">
                 <input name="_method" type="hidden" value="delete">
-                <button type="submit" name="delete">Delete Student</button>
+                <button type="submit" name="delete">Delete Course</button>
+            </form>
+
+            <ul>
+                {% for student in returned_students %}
+                    <li>{{ student.getStudentName() }}</li>
+                {% endfor %}
+            </ul>
+
+            <form action="/add_student_to_course/{{ course.getId() }}" method="post">
+                <select name="students">
+                    {% for student in students %}
+                    <option value="{{student.getId()}}">{{student.getStudentName()}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" name="student-submit">Add student to class</button>
             </form>
 
 {%endblock%}

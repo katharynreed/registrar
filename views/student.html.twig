@@ -1,5 +1,10 @@
 {% extends "index.html.twig"%}
 
+{%block header%}
+<a href="/">Home</a>
+{%endblock%}
+
+
 {%block content%}
             <li>{{student.getStudentName}}</li>
             <li>{{student.getDateEnrolled}}</li>
@@ -9,5 +14,20 @@
                     <button type="submit" name="delete">Delete Student</button>
                 </form>
             </p>
+
+            <ul>
+                {% for course in returned_courses %}
+                    <li>{{ course.getCourseName() }}</li>
+                {% endfor %}
+            </ul>
+
+            <form action="/add_to_course/{{ student.getId() }}" method="post">
+                <select name="courses">
+                    {% for course in courses %}
+                    <option value="{{course.getId()}}">{{course.getCourseName()}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" name="course-submit">Add course to class</button>
+            </form>
 
 {%endblock%}
